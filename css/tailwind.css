@@ -7,11 +7,11 @@
 /* Core theme configuration */
 @theme {
   /* Font families */
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+  --font-sans: var(--font-pretendard), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /* Colors */
-  /* Copied from https://tailwindcss.com/docs/theme#default-theme-variable-reference */
+  /* Pink palette - vivid and readable */
   --color-primary-50: oklch(0.971 0.014 343.198);
   --color-primary-100: oklch(0.948 0.028 342.258);
   --color-primary-200: oklch(0.899 0.061 343.231);

@@ -60,22 +60,26 @@ const computedFields: ComputedFields = {
 }
 
 /**
- * Count the occurrences of all tags across blog posts and write to json file
+ * Count the occurrences of all tags across blog posts and projects and write to json file
  */
-async function createTagCount(allBlogs) {
+async function createTagCount(allBlogs, allProjects) {
   const tagCount: Record<string, number> = {}
-  allBlogs.forEach((file) => {
-    if (file.tags && (!isProduction || file.draft !== true)) {
-      file.tags.forEach((tag) => {
-        const formattedTag = slug(tag)
-        if (formattedTag in tagCount) {
-          tagCount[formattedTag] += 1
-        } else {
-          tagCount[formattedTag] = 1
-        }
-      })
-    }
-  })
+  const countTags = (items) => {
+    items.forEach((file) => {
+      if (file.tags && (!isProduction || file.draft !== true)) {
+        file.tags.forEach((tag) => {
+          const formattedTag = slug(tag)
+          if (formattedTag in tagCount) {
+            tagCount[formattedTag] += 1
+          } else {
+            tagCount[formattedTag] = 1
+          }
+        })
+      }
+    })
+  }
+  countTags(allBlogs)
+  countTags(allProjects)
   const formatted = await prettier.format(JSON.stringify(tagCount, null, 2), { parser: 'json' })
   writeFileSync('./app/tag-data.json', formatted)
 }
@@ -147,9 +151,30 @@ export const Authors = defineDocumentType(() => ({
   computedFields,
 }))
 
+export const Project = defineDocumentType(() => ({
+  name: 'Project',
+  filePathPattern: 'projects/**/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    description: { type: 'string', required: true },
+    period: { type: 'string', required: true },
+    startDate: { type: 'string', required: true },
+    endDate: { type: 'string', required: true },
+    team: { type: 'string' },
+    tags: { type: 'list', of: { type: 'string' }, default: [] },
+    images: { type: 'json' },
+    github: { type: 'string' },
+    demo: { type: 'json' },
+    links: { type: 'json' },
+    layout: { type: 'string' },
+  },
+  computedFields,
+}))
+
 export default makeSource({
   contentDirPath: 'data',
-  documentTypes: [Blog, Authors],
+  documentTypes: [Blog, Authors, Project],
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [
@@ -180,8 +205,8 @@ export default makeSource({
     ],
   },
   onSuccess: async (importData) => {
-    const { allBlogs } = await importData()
-    createTagCount(allBlogs)
+    const { allBlogs, allProjects } = await importData()
+    createTagCount(allBlogs, allProjects)
     createSearchIndex(allBlogs)
   },
 })
