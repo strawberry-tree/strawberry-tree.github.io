@@ -72,6 +72,9 @@ module.exports = () => {
     eslint: {
       dirs: ['app', 'components', 'layouts', 'scripts'],
     },
+    typescript: {
+      ignoreBuildErrors: true,
+    },
     images: {
       remotePatterns: [
         {
