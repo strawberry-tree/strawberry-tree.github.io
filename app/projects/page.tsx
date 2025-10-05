@@ -36,10 +36,10 @@ export default function Projects() {
               return (
                 <article
                   key={project.slug}
-                  className="flex flex-col space-y-1 rounded-lg border border-gray-200 p-6 md:flex-row md:space-y-0 md:space-x-6 dark:border-gray-700"
+                  className="grid grid-cols-1 gap-6 rounded-lg border border-gray-200 p-6 md:grid-cols-[3fr_6fr] dark:border-gray-700"
                 >
                   {imgSrc && (
-                    <div className="flex-shrink-0">
+                    <div>
                       <Link href={`/projects/${project.slug}`}>
                         <Image
                           src={imgSrc}
@@ -47,12 +47,12 @@ export default function Projects() {
                           width={400}
                           height={300}
                           quality={95}
-                          className="rounded-lg object-cover"
+                          className="h-full w-full rounded-lg object-cover"
                         />
                       </Link>
                     </div>
                   )}
-                  <div className="flex-1">
+                  <div>
                     <h2 className="text-2xl leading-8 font-bold tracking-tight">
                       <Link
                         href={`/projects/${project.slug}`}
