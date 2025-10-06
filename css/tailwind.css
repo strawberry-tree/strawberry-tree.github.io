@@ -94,7 +94,7 @@
       letter-spacing: var(--tracking-tight);
     }
     & :where(h1, h2):not(:first-child) {
-      margin-top: 3rem;
+      margin-top: 1rem;
     }
     & h3 {
       font-weight: 600;
