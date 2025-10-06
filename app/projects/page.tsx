@@ -16,7 +16,7 @@ function sortProjects<T extends { endDate?: string }>(projects: T[]): T[] {
 }
 
 export default function Projects() {
-  const projects = allCoreContent(sortProjects(allProjects))
+  const projects = allCoreContent(sortProjects(allProjects)).filter((p) => p.draft !== true)
 
   return (
     <>

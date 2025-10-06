@@ -1,0 +1,121 @@
+---
+title: 'Curriculum Vitae'
+name: '송상록'
+avatar: '/static/images/avatar.png'
+occupation: 'Fullstack Developer'
+email: 'drinkingstraw33@gmail.com'
+github: 'https://github.com/strawberry-tree'
+links:
+  - text: '포트폴리오'
+    url: 'https://strawberry-tree.github.io'
+  - text: 'velog'
+    url: 'https://velog.io/@strawberry-tree'
+layout: 'CVLayout'
+---
+
+# 자기소개
+
+## **사용자 경험을 최우선으로 생각하는** 풀스택 개발자 송상록입니다.
+
+저는 성능 향상과 시스템 안정화가 좋은 사용자 경험의 핵심이라고 믿습니다. 3D 웹 애플리케이션 프로젝트를 개발하며 모델 로딩 시간을 58% 단축하고, 락 시스템을 구현해 실시간 협업 환경을 안정화한 경험이 있습니다. 심리학 전공을 바탕으로 사용자 관점에서 문제를 분석하고, 기술적 깊이를 활용해 더 나은 서비스를 만들어갑니다.
+
+---
+
+## 기술 스택
+
+<Tag text="JavaScript" /> <Tag text="Next.js" /> <Tag text="React" /> <Tag text="TailwindCSS" />
+
+---
+
+## 프로젝트
+
+### [어따놀래 - 우리 집 꾸미기 시뮬레이터](https://strawberry-tree.github.io/projects/wheretoput)
+
+**크래프톤 정글 9기 팀 프로젝트** | 2025.08 - 2025.09
+
+AI로 생성한 3D 가구를 함께 배치하며 방을 꾸밀 수 있는 인테리어 시뮬레이터
+
+<Tag text="Next.js" /> <Tag text="React Three Fiber" /> <Tag text="OpenCV.js" /> <Tag text="Socket.io" /> <Tag text="Redis" /> <Tag text="PostgreSQL" />
+
+**핵심 성과**
+
+- **팀 리더**로서 기획, 개발, 배포 전 과정 총괄
+- **3D 씬 성능 최적화**: Draco 압축 + WebP 텍스처 변환으로 모델 용량 92% 감소(1.3MB --> 0.1MB), 초기 로딩 58% 개선(6s --> 2.5s)
+- **실시간 협업 안정성**: Socket.io + Redis 기반 락 시스템으로 다중 사용자 동시 수정 충돌 차단
+- **벽 자석 기능**: OBB 좌표 변환으로 가구-벽 거리 계산, 30cm 이내 자동 스냅하여 수동 정렬 불편 해소
+- **도면 자동 인식** OpenCV.js 활용 및 평행선 병합 로직 구현으로 도면 이미지에서 벽 자동 검출
+
+[서비스 링크](https://wheretoput.store) | [GitHub](https://github.com/KJ-9th-NMM-Team2/wheretoput) | [발표 영상](https://www.youtube.com/embed/NzAyGC2Smv4)
+
+---
+
+### [Pintos 운영체제 구현](https://strawberry-tree.github.io/projects/pintos)
+
+**크래프톤 정글 9기 팀 프로젝트** | 2025.07 - 2025.08
+
+교육용 운영체제 Pintos 기반으로 쓰레드 관리, 시스템 콜, 가상 메모리 기능을 구현
+
+<Tag text="C" />
+
+**핵심 성과**
+
+- **Fork 예외 처리 구현**: 부모-자식 프로세스 간 공유 구조체에 성공 플래그 추가, 세마포어와 연계하여 자식 프로세스 실패 감지
+- **스택 확장 구현**: 페이지 폴트 발생 시 스택 포인터 범위에 맞춰 반복적으로 페이지 할당, 큰 배열 접근 시 오류 방지
+- C언어 구현 과정에서 **강타입 언어에 대한 이해와 디버깅 능력** 향상
+
+[GitHub](https://github.com/ssumday24/pintos_week12)
+
+---
+
+### [효율적 복습을 위한 모의고사 자동제작 서비스](https://strawberry-tree.github.io/projects/test-maker)
+
+**대학 과제 - 개인 프로젝트** | 2024.03 - 2024.04
+
+GPT-4 API를 활용해 학습 자료(PDF, docx, txt)로부터 객관식 문제와 해설을 자동 생성하는 에듀테크 서비스
+
+<Tag text="Python" /> <Tag text="Langchain" /> <Tag text="Streamlit" /> <Tag text="Pydantic" />
+
+**핵심 성과**
+
+- **LLM 출력 안정화**: Pydantic 스키마 + Langchain으로 GPT-4 응답을 구조화, 파싱 실패율 0% 달성
+- **세션 관리**: 세션 상태 캐싱으로 파일 업로드 --> 문제 풀이 --> 채점 및 해설 과정에서 API 중복 호출 방지
+- **베타테스트**: Streamlit 기반 배포로 실제 10명의 대학생 베타테스트 진행, 시험 기간 복습에 도움이 됐다는 긍정적 평
+
+[GitHub](https://github.com/freud-sensei/test_maker)
+
+---
+
+### [대충 살아보는 대학생활](https://strawberry-tree.github.io/projects/college-life-game)
+
+**대학 과제 - 팀 프로젝트** | 2020.11 - 2020.12
+
+예비 대학생 대상, 이벤트 선택지 시스템을 통해 대학생활을 체험할 수 있는 웹게임
+
+<Tag text="p5.js" /> <Tag text="JavaScript" />
+
+**핵심 성과**
+
+- **팀 리더**로서 개발팀과 디자인-시나리오팀 간 소통 조율
+- **로딩 최적화**: 15MB의 이미지, 사운드 사전 로딩 --> 이벤트 로딩 시간 90% 단축(1s --> 0.1s)
+- **협업 효율 향상**: 이벤트 로직을 클래스화 및 데이터 배열로 분리 --> 비개발자도 독립적으로 콘텐츠 추가 및 수정 가능하게 조치
+
+[서비스 링크](https://editor.p5js.org/freud-sensei/full/sh8xIaEWl) | [GitHub](https://github.com/strawberry-tree/snutopia)
+
+---
+
+## 대외활동
+
+**크래프톤 정글 9기** | 2025.05 - 2025.10
+
+- 5개월 집중 합숙을 통한 CS 기초(자료구조, 알고리즘, 컴퓨터 구조, OS) 강화
+- 로우레벨 C 프로그래밍부터 웹 서버, 운영체제 구현까지 실전 프로젝트 수행
+
+---
+
+## 교육
+
+**서울대학교 심리학과** | 2019.03 - 2025.02 (졸업)
+
+- [**인간공학심리학 연구실 인턴**](https://hfpsych.snu.ac.kr) (2024.07 – 2025.02): R, pandas, scipy.stats 사용한 실험 통계분석 업무 수행
+- [**스누로 진로멘토링**](https://educenter.snu.ac.kr/%EC%8A%A4%EB%88%84%EB%A1%9C/) (2022.10 - 2024.08): 시흥시 중, 고등학생 대상 비대면 모의면접 및 학습 상담 진행
+- [**프로네시스 나눔실천단 나눔교실 교육봉사**](https://www.instagram.com/snu_phronesis/) (2023.02): 충북 영동 황간고등학교에서 5박 6일 간 학습법 수업, 학습 상담 진행

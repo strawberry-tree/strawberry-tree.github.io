@@ -8,123 +8,69 @@ team: '개인 프로젝트'
 tags: ['Python', 'Langchain', 'Streamlit', 'OpenAI GPT-4', 'Pydantic']
 images: ['/static/images/test-maker.png']
 github: 'https://github.com/freud-sensei/test_maker'
-links:
-  - url: 'https://github.com/strawberry-tree/test_maker/blob/main/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC%EC%99%80%EA%B5%90%EC%9C%A1_%EA%B8%B0%EB%A7%90%EB%B0%9C%ED%91%9C_%EC%86%A1%EC%83%81%EB%A1%9D.pdf'
-    text: 발표 자료
 ---
 
-## 프로젝트 개요
+# 프로젝트 개요
 
-본 서비스는 학생이 업로드한 학습 자료(PDF, docx, txt)를 분석하여 **자동으로 객관식 모의고사를 생성**하고, 문제 풀이 후 **채점 및 해설**까지 제공하는 LLM 기반 에듀테크 서비스입니다.
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
+  {/* 좌측 큰 이미지 */}
+  <img
+    src="/static/images/test-maker/test-maker-1a.png"
+    className="w-full h-auto object-cover lg:col-span-6"
+  />
 
-## 핵심 기능 및 기술적 해결
+{/* 우측 작은 이미지들 */}
 
-### 1. Pydantic 스키마로 LLM 출력 안정화
+  <div className="grid grid-cols-1 gap-2 lg:col-span-6">
+    <img
+      src="/static/images/test-maker/test-maker-1b.png"
+      className="!my-0 w-full h-auto object-cover"
+    />
+    <img
+      src="/static/images/test-maker/test-maker-1c.png"
+      className="!my-0 w-full h-auto object-cover"
+    />
+  </div>
+</div>
 
-**문제점**: GPT-4가 자유 형식으로 답변하면 파싱 실패 위험
+본 서비스는 학생이 업로드한 학습 자료(PDF, docx, txt)를 분석하여 **자동으로 객관식 모의고사를
+생성**하고, 문제 풀이 후 **채점 및 해설**까지 제공하는 GPT-4 기반 에듀테크 서비스입니다.
 
-**해결**:
+교육학과 전공수업 과제로 Streamlit Cloud를 통해 배포하여 실제 10명의 대학생을 대상으로 베타테스트를 진행하였으며, 시험기간 복습에 도움이 되었다는 긍정적인 평가를 받았습니다.
 
-```python
-class SingleQuestion(BaseModel):
-    question: str = Field(description="Multiple choice questions")
-    correct: str = Field(description="The correct answer")
-    incorrect: List[str] = Field(description="List of incorrect answers")
-    explanation: str = Field(description="Explanation on why the answer is correct")
+> 저는 소수과 임용고시를 준비 중인데, 저처럼 수험생이 적어 참고서가 부족한 분야 시험을 앞둔 사람들에게 매우 유용할 것 같습니다.
 
-class Questionmaker(BaseModel):
-    questions: List[SingleQuestion] = Field(description="List of questions")
-```
+> 학생들 입장에서 장소나 시간에 구애받지 않고 학습 내용을 테스트할 수 있다는 점에서 공부의 효율성이 증가할 것 같습니다.
 
-- Pydantic 스키마로 **JSON 구조 강제**하여 파싱 실패 방지
-- `create_structured_output_runnable()`로 LLM, Prompt, Schema를 결합한 Chain 생성
-- 문제(question), 정답(correct), 오답 리스트(incorrect), 해설(explanation) 필드 명확히 정의
+> 학생들이 직접 정리한 내용을 바탕으로 학습할 수 있어 자율 학습에 큰 도움이 될 것으로 보입니다.
 
-### 2. Prompt Engineering으로 품질 보장
+<span className="flex flex-col gap-4 md:flex-row">
+  <a href="https://github.com/strawberry-tree/test_maker/blob/main/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC%EC%99%80%EA%B5%90%EC%9C%A1_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%EC%86%A1%EC%83%81%EB%A1%9D.pdf">
+    추가 설명 - 프롬프팅 구현과정
+  </a>
+  <a href="https://github.com/strawberry-tree/test_maker/blob/main/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC%EC%99%80%EA%B5%90%EC%9C%A1_%EA%B8%B0%EB%A7%90%EB%B0%9C%ED%91%9C_%EC%86%A1%EC%83%81%EB%A1%9D.pdf">
+    추가 설명 - 이용자 반응
+  </a>
+</span>
 
-```python
-template = '''
-You are a study assistant which must generate unique {num_questions} multiple-choice questions for students.
-By using [INPUT_DATA], make multiple choice questions in a structured format.
-You must make one correct answer, and a maximum of four incorrect answers.
-The language must be in {language}.
-Tips: You must return {num_questions} questions, not more and not less.
+# 문제 해결
 
-[INPUT_DATA]:
-{input_data}
-'''
-```
+## 1. Pydantic 스키마로 LLM 출력 안정화
 
-- `num_questions`, `language`, `input_data`를 변수로 받아 **동적 문제 생성**
-- "정확히 N개의 문제를 생성하라"는 제약 조건으로 일관성 확보
-- 영어로 작성하여 **토큰 비용 절감** (약서 '동백꽃' 모의고사 1회 생성 시 약 $0.125)
+**문제**: 모의고사를 제작하기 위해 (문제 목록 → 각 문제 → 정답/오답 선지)의 중첩된 구조로 응답을 받아야 했습니다. 그러나 GPT-4는 응답 형식이 자유로워, 단순 프롬프트만으로 구조를 명시할 경우 GPT-4가 구조를 정확히 지키지 않아 실패하는 경우가 있었습니다.
 
-### 3. Streamlit 세션 상태 관리
+<img className="mx-auto block w-full max-w-md" src="/static/images/test-maker/test-maker-2.png" />
 
-```python
-if "current_step" not in sts:
-    sts.current_step = "A"
-if "questionnaire" not in sts:
-    sts.questionnaire = ""
+**해결**: **Pydantic 스키마**로 클래스 필드의 타입과 설명을 정의하고, **Langchain**을 통해 GPT-4가 반드시 이 구조로만 응답하도록 강제했습니다. `SingleQuestion`과 `Questionmaker` 2개 클래스를 중첩하여 사용함으로써, 복잡한 모의고사 구조도 자동으로 검증 및 파싱되도록 구현했습니다.
 
-def callback():
-    with st.spinner("문제를 생성 중입니다."):
-        sts.questionnaire = generate_questionnaire(...)
-    sts.current_step = "B"
-```
+**결과**: LLM 응답이 항상 정해진 JSON 구조로 반환되어 파싱 실패율 0%를 달성했습니다.
 
-- **3단계 워크플로우**: A(파일 업로드 및 설정) → B(문제 풀이) → C(채점 및 해설)
-- `st.session_state`로 current_step, questionnaire, input_text 등 관리
-- 콜백 함수로 **단계 전환 및 상태 초기화**, 새로고침해도 데이터 손실 방지
+## 2. 세션 기반 3단계 워크플로우 구현
 
-### 4. 다양한 파일 형식 지원 및 캐싱
+**문제**: 파일 업로드 → 문제 풀이 → 채점 및 해설의 3단계 흐름을 개별 화면으로 구현해야 했는데, Streamlit은 화면이 전환될 때마다 스크립트를 처음부터 재실행하여 변수가 초기화되었습니다. 이로 인해 GPT API 호출 결과가 손실되어 비용이 중복 발생할 수 있는 문제가 있었습니다.
 
-```python
-@st.cache_data
-def read_pdf(file):
-    text = ""
-    reader = PdfReader(file)
-    for page in reader.pages:
-        text += page.extract_text()
-    return text
+<img className="mx-auto block w-full max-w-md" src="/static/images/test-maker/test-maker-3.png" />
 
-@st.cache_data
-def read_docx(file):
-    doc = Document(file)
-    text = ""
-    for paragraph in doc.paragraphs:
-        text += paragraph.text + "\n"
-    return text
-```
+**해결**: **현재 진행 단계**, **문제 데이터**, **사용자가 제출한 정답 데이터**를 **세션 상태에 캐싱**하였습니다. 3단계 흐름이 진행되는 동안 **세션에 캐싱된 데이터를 재사용**하여 불필요한 API 재호출을 방지했습니다.
 
-- **PDF 파싱** (PyPDF2): 페이지별 텍스트 추출 및 통합
-- **Word 문서 처리** (python-docx): .docx 파일의 단락별 읽기
-- **직접 입력**: 텍스트 직접 입력 및 .txt 파일 업로드
-- `@st.cache_data` 데코레이터로 **파일 읽기 성능 향상**
-
-## 사용성 평가 결과 (대학생 10명 대상)
-
-### 인지과학적 측면
-
-> "생각보다 자세하게 문제를 만들어서 공급했다... 나름의 심화 내용을 담으려는 모습도 섰어 문제의 질과 양 모두를 보장할 수 있는 프로그램이라는 생각이 듭니다."
-
-- **학습자료의 내용 중 핵심내용이 무엇인지 이해**할 수 있었음
-- 어떤 부분을 정확히 알았고, **보충이 필요하거나 오개념이 있는 부분을 파악**할 수 있음
-
-### 컴퓨터공학적 측면
-
-> "선지에 대한 개선이 필요하다고 생각이 된다. 문제를 풀 때 정답 선지만 오답 선지와 정답 선지가 지나치게 구분될 수 있었다."
-
-> "단답을 제공하고 오답이 나올 때 바로 답이 나오는 것이 아니라 설명에 따라 여러 문제가 들었는지만 표시해주고 다시 풀 수 있는 기회가 있었으면 좋겠습니다."
-
-- **논리적 추론이 필요한 문제**를 생성할 수 있게끔, prompt engineering 연구를 진행해야 함
-- 정오답 선지를 구별하기 어렵게 하거나, 새로운 문제를 통해 **들린 문제를 복습할 수 있는 기능** 필요
-
-### 교육학적 측면
-
-> "기존 문제집 및 사교육으로 발생하는 비용을 줄일 수 있으리라 기대... 인공지능의 도입 이후에도 기존 교육 전문가의 역할은 중요함"
-
-> "인공지능이 세상을 지배하는 것이 아니, **인공지능을 잘 활용하는 인간이 세상을 지배**한다!"
-
-- 기존 문제집 및 사교육으로 발생하는 **비용을 줄일 수 있으리라 기대**
-- 교육 전문가들은 문제 출제보다는 **인공지능이 출제한 문제를 검수하는 역할**에 집중할 것
+**결과**: 3단계 흐름 진행 시 불필요한 API 재호출로 인한 비용 발생을 방지했습니다.

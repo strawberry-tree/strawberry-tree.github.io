@@ -22,36 +22,34 @@ demo: 'https://editor.p5js.org/freud-sensei/full/sh8xIaEWl'
 
 예비 대학생을 위한 학교 홍보용 인터랙티브 보드게임 형식의 웹게임입니다. 플레이어는 주사위를 굴려, 각 칸에서 발생하는 총 30개의 이벤트를 통해 대학 생활을 간접 체험합니다. 선택지에 따라 스탯이 변화하며, 최종 스탯 조합에 따른 다양한 엔딩을 볼 수 있습니다.
 
-<div className="mx-auto grid grid-cols-2">
+2명의 개발팀, 3명의 시나리오 및 디자인팀이 진행한 팀 프로젝트입니다. 저는 개발팀에 속했으며, 팀 리더로서 프로젝트 아이디어 제시 및 개발팀 및 시나리오/디자인 간 소통 조율을 담당했습니다.
+
+대학 2학년 때 진행한 저의 첫 프로젝트로, 기술 스택이 다소 단순하지만 리소스 로딩 최적화와 효율적인 자료구조 구현에 있어서 기틀을 쌓을 수 있게 해준 소중한 프로젝트입니다.
+
+<div className="mx-auto grid grid-cols-1 gap-0 md:grid-cols-2">
   <img
-    className="block aspect-[10/7] h-auto w-full"
+    className="!my-0 block aspect-[10/7] h-auto w-full object-cover"
     src="/static/images/college-life-game/college-life-game-1.png"
   />
   <img
-    className="block aspect-[10/7] h-auto w-full"
+    className="!my-0 block aspect-[10/7] h-auto w-full object-cover"
     src="/static/images/college-life-game/college-life-game-2.png"
   />
   <img
-    className="block aspect-[10/7] h-auto w-full"
+    className="!my-0 block aspect-[10/7] h-auto w-full object-cover"
     src="/static/images/college-life-game/college-life-game-3.png"
   />
   <img
-    className="block aspect-[10/7] h-auto w-full"
+    className="!my-0 block aspect-[10/7] h-auto w-full object-cover"
     src="/static/images/college-life-game/college-life-game-4.png"
   />
 </div>
-
-# 주요 역할
-
-대학교 2학년 때 처음 만든 웹 프로젝트로, 기술 스택은 단순하지만 리소스 최적화와 유지보수성을 위한 리소스 최적화를 배울 수 있었던 의미 있는 프로젝트였습니다.
-
-2명의 개발팀, 3명의 시나리오 및 디자인팀이 진행한 팀 프로젝트입니다. 저는 개발팀에 속했으며, 팀 리더로서 프로젝트 아이디어 제시 및 개발팀 및 시나리오/디자인 간 소통 조율을 담당했습니다.
 
 # 문제 해결
 
 ## 1. 리소스 로딩 성능 최적화
 
-<img className="mx-auto max-w-3xl" src="/static/images/college-life-game/college-life-game-5.png" />
+<img className="mx-auto w-full" src="/static/images/college-life-game/college-life-game-5.png" />
 
 **문제**: 각 칸의 이벤트에 사용되는 이미지와 사운드를 실시간으로 로드할 경우 매번 1초 이상의 로딩 대기 시간이 발생하여 게임 몰입도가 크게 저하되었습니다.
 
@@ -61,10 +59,19 @@ demo: 'https://editor.p5js.org/freud-sensei/full/sh8xIaEWl'
 
 ## 2. 클래스를 사용한 이벤트 생성 협업 효율 향상
 
-<img className="mx-auto max-w-4xl" src="/static/images/college-life-game/college-life-game-6.png" />
+<span className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-1">
+  <img
+    className="max-md max-md:!my-0"
+    src="/static/images/college-life-game/college-life-game-6a.png"
+  />
+  <img
+    className="max-md max-md:!my-0"
+    src="/static/images/college-life-game/college-life-game-6b.png"
+  />
+</span>
 
 **문제**: 30개 이벤트를 각각 함수로 구현하면, 이벤트 추가·수정 시마다 개발자가 직접 코드를 작성해야 해 협업 병목이 발생했습니다.
 
 **해결**: 이벤트 처리 로직은 클래스로 구현하고, 콘텐츠(메시지, 선택지, 스탯 변동값)는 데이터 배열로 분리했습니다. 새 이벤트 추가 시 배열에 데이터만 입력하면 클래스가 UI 렌더링부터 스탯 계산까지 자동 처리합니다.
 
-**결과**: 비개발자인 디자인팀도 데이터 배열만 수정하면 개발자 개입 없이 이벤트 추가·수정을 할 수 있게 되어, 협업 효율이 크게 향상되었습니다.
+**결과**: 비개발자로 구성된 디자인 및 시나리오팀도 데이터 배열만 수정하면 개발자 개입 없이 이벤트 추가·수정을 할 수 있게 되어, 협업 효율이 크게 향상되었습니다.

@@ -168,13 +168,32 @@ export const Project = defineDocumentType(() => ({
     demo: { type: 'json' },
     links: { type: 'json' },
     layout: { type: 'string' },
+    draft: { type: 'boolean' },
+  },
+  computedFields,
+}))
+
+export const CV = defineDocumentType(() => ({
+  name: 'CV',
+  filePathPattern: 'cv.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    name: { type: 'string', required: true },
+    avatar: { type: 'string' },
+    occupation: { type: 'string' },
+    email: { type: 'string' },
+    github: { type: 'string' },
+    linkedin: { type: 'string' },
+    links: { type: 'json' },
+    layout: { type: 'string' },
   },
   computedFields,
 }))
 
 export default makeSource({
   contentDirPath: 'data',
-  documentTypes: [Blog, Authors, Project],
+  documentTypes: [Blog, Authors, Project, CV],
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [

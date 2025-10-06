@@ -1,0 +1,37 @@
+flowchart TB
+    subgraph Before["Before"]
+        direction LR
+        B1["30개 이벤트"]
+        B2["함수 1: 이벤트 1<br/>─────────<br/>메시지 표시, 선택지 처리,<br/>스탯 계산, UI 렌더링"]
+        B3["함수 2: 이벤트 2<br/>─────────<br/>메시지 표시, 선택지 처리,<br/>스탯 계산, UI 렌더링"]
+        B4["...<br/>(30개 함수)"]
+        B5["<strong>개발자만 함수 추가 및 수정 가능</strong>"]
+        B6["게임 화면"]
+        
+        B1 --> B2 & B3 & B4
+        B2 --> B5
+        B3 --> B5
+        B4 --> B5
+        B5 --> B6
+    end
+    
+    subgraph After["After"]
+        direction LR
+        A1["30개 이벤트"]
+        A2["messageArray<br/>─────────<br/>각 이벤트의 메시지, 선택지<br/>String으로 구성된 배열"]
+        A3["changeArray<br/>─────────<br/>각 이벤트의 스탯 변동값<br/>Number로 구성된 배열"]
+        A4["<strong>비개발자도 배열 수정으로<br/>쉽게 이벤트 추가 및 수정 가능</strong>"]
+        A5["Event 클래스로<br/>배열 순회하면서 인스턴스 생성<br/>─────────<br/>메시지 표시, 선택지 처리,<br/>스탯 계산, UI 렌더링"]
+        A6["게임 화면"]
+        
+        A1 --> A2 & A3
+        A2 --> A4
+        A3 --> A4
+        A4 --> A5
+        A5 --> A6
+    end
+    
+    Before ~~~ After
+    
+    style Before fill:#FFE0B2
+    style After fill:#FFF9C4

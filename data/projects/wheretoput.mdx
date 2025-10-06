@@ -8,8 +8,9 @@ team: '크래프톤 정글 9기'
 tags: ['Next.js', 'React Three Fiber', 'Socket.io', 'OpenCV.js', 'PostgreSQL', 'Redis']
 images: ['/static/images/wheretoput.png']
 github: 'https://github.com/KJ-9th-NMM-Team2/wheretoput'
-demo: 'https://wheretoput.store'
 links:
+  - url: 'https://wheretoput.store'
+    text: 서비스 링크
   - url: https://www.youtube.com/embed/NzAyGC2Smv4?si=CiRqfS9y17RThK2U
     text: 발표영상
 ---
@@ -28,23 +29,27 @@ links:
   ></iframe>
 </div>
 
-React Three Fiber를 이용하여 3D 인테리어 시뮬레이터 **어따놀래**를 개발하였습니다. OpenCV.js를 활용한 도면 업로드를 통한 방 공간 생성, [Microsoft Trellis AI](https://replicate.com/firtoz/trellis)로 생성된 가구 배치, Socket.io를 활용한 다른 사용자와의 실시간 동시편집 등 기능을 제공합니다.
+**어따놀래**는 React Three Fiber 기반의 3D 인테리어 시뮬레이터이며, 아래와 같은 기능을 제공합니다.
 
-크래프톤 정글 9기 최종 프로젝트로 진행하였으며, 팀 리더로서 프로젝트 기획 및 개발 전 과정을 주도했습니다. 팀원으로서는 시뮬레이터에서의 **가구 모델 관리** 및 **협업 (동시편집) 기능** 구현을 담당했습니다.
+- 도면 업로드로 3D공간 자동 생성 (OpenCV.js)
+- AI 생성 가구 모델 배치 ([Microsoft Trellis](https://replicate.com/firtoz/trellis))
+- 실시간 동시편집 협업 (Socket.io)
+
+팀 리더로서 프로젝트 기획 및 개발 전 과정을 주도했습니다. 팀원으로서는 **가구 모델 관리** 및 **실시간 협업 (동시편집) 기능** 구현을 담당했습니다.
 
 # 문제 해결
 
 ## 1. GLB 파일 로딩 성능 최적화
 
-<img className="mx-auto max-w-xl" src="/static/images/wheretoput/wheretoput-1.png" />
+<img className="mx-auto w-full max-w-2xl" src="/static/images/wheretoput/wheretoput-1.png" />
 
-**문제**: Trellis AI가 생성한 3D 모델(.glb)의 평균 크기가 1.3MB로, Amazon S3에 저장된 glb 파일을 불러오는 과정에서 시간이 지연되어 시뮬레이터 초기 로딩에 약 6초의 긴 시간이 발생했습니다.
+**문제**: AI 생성 3D 모델(.glb)의 평균 크기가 1.3MB로, Amazon S3에서 모델을 불러오는 과정이 지연되어 시뮬레이터 초기 로딩에 약 6초가 소요되었습니다.
 
-**해결**: Sharp 라이브러리를 사용하여, 텍스처의 기존의 png에서 WebP로 포맷을 변환하였습니다. 육안에 보이는 차이 없이, 평균 크기를 1.3MB에서 0.1MB로 용량을 1/12로 줄였습니다. 모델 용량을 0.1MB로 92% 감소시켰습니다. 용량이 크게 줄어, 백엔드를 담당하는 동료가 Redis에 glb 파일을 blob 형태로 캐싱해 보는 게 어떻겠냐고 제안하여 추가 조치가 이루어졌습니다.
+**해결**: Sharp 라이브러리를 사용하여 텍스처 포맷을 PNG에서 WebP로 변환했습니다. 육안으로 보이는 차이 없이 평균 파일 크기를 1.3MB에서 0.1MB로 92% 감소시켰습니다. 용량이 크게 줄면서 백엔드를 담당하는 동료가 Redis에 GLB 파일을 blob 형태로 캐싱하는 방안을 제안하여 추가 최적화를 진행했습니다.
 
-**결과**: 최종적으로 평균 로딩 시간을 6초 --> 2.5초로 58% 개선하여 끊김 없는 사용자 경험을 제공했습니다.
+**결과**: 평균 로딩 시간을 6초에서 2.5초로 58% 개선하여 끊김 없는 사용자 경험을 제공했습니다.
 
-<span className="flex gap-4">
+<span className="flex flex-col gap-0 md:flex-row md:gap-4">
   <a href="https://github.com/KJ-9th-NMM-Team2/wheretoput/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EC%B1%8C%EB%A6%B0%EC%A7%80-%233-%E2%80%90-GLB-%ED%8C%8C%EC%9D%BC-%EC%95%95%EC%B6%95">
     추가 설명 - GLB 파일 압축
   </a>
@@ -55,11 +60,11 @@ React Three Fiber를 이용하여 3D 인테리어 시뮬레이터 **어따놀래
 
 ## 2. OpenCV.js 기반 도면 자동 인식
 
-<img className="mx-auto max-w-2xl" src="/static/images/wheretoput/wheretoput-2.png" />
+<img className="mx-auto w-full max-w-3xl" src="/static/images/wheretoput/wheretoput-2.png" />
 
 **문제**: 사용자가 수동으로 본인의 집의 벽을 확인해서 도면을 그리게끔 하는 것은 매우 비효율적입니다.
 
-**해결**: OpenCV.js를 활용한 도면 자동 인식 파이프라인을 구현했습니다. Hough Line Transform으로 이미지에서 직선을 추출합니다. 이때 한 벽에서 여러 직선이 추출될 수 있기 때문에, 평행선 병합 알고리즘을 설계했습니다. 평행하고 가까운(15px 이내) 선분들을 그룹화하여 중심선을 계산하고, 수직/수평 선분만 필터링하여 최종 벽 구조를 도출합니다.
+**해결**: OpenCV.js를 활용한 도면 자동 인식 파이프라인을 구현했습니다. Hough Line Transform으로 이미지에서 직선을 추출한 후, 평행선 병합 알고리즘을 통해 한 벽에서 추출된 여러 직선을 하나로 통합했습니다. 평행하고(각도 차이 5도 이내) 가까운(15px 이내) 선분들을 그룹화하여 중심선을 계산하하여 최종 벽 구조를 도출했습니다.
 
 **결과**: 도면을 업로드만 하면 3초 내로 3D 공간이 생성되어, 초기 설정 시간이 대폭 단축되었습니다.
 
@@ -67,17 +72,17 @@ React Three Fiber를 이용하여 3D 인테리어 시뮬레이터 **어따놀래
   추가 설명 - 도면 벽 검출
 </a>
 
-## 3. OBB 기반 벽 자석 기능 (UX 개선)
+## 3. 코너 벽 자석 기능의 성능 최적화
 
-<span className="flex gap-1">
-  <img className="mx-auto max-w-sm" src="/static/images/wheretoput/wheretoput-3.png" />
-  <img className="mx-auto max-w-sm" src="/static/images/wheretoput/wheretoput-5.png" />
-  <img className="mx-auto max-w-sm" src="/static/images/wheretoput/wheretoput-4.png" />
+<span className="flex flex-col space-y-0 md:flex-row">
+  <img className="mx-auto !my-0 w-full max-w-sm" src="/static/images/wheretoput/wheretoput-3.png" />
+  <img className="mx-auto !my-0 w-full max-w-sm" src="/static/images/wheretoput/wheretoput-5.png" />
+  <img className="mx-auto !my-0 w-full max-w-sm" src="/static/images/wheretoput/wheretoput-4.png" />
 </span>
-**문제**: React Three Fiber는 별도의 충돌 감지를 지원하지 않아, 가구를 벽에 맞춰 정렬하는 작업이
-매우 번거로웠습니다.
+**문제**: React Three Fiber는 별도의 충돌 감지를 지원하지 않아 가구를 벽에 맞춰 정렬하는 작업이 매우
+번거로웠습니다.
 
-**해결**: 가구가 벽으로부터 30cm 이내에 접근하면 자동으로 5cm 간격을 두고 스냅되는, 벽 자석 기능을 개발했습니다. 가구의 회전을 고려한 Oriented Bounding Box를 계산하고, 벽의 로컬 좌표계로 변환하여 정확한 거리를 측정합니다. 코너에서는 양쪽 벽 모두에 자동 정렬됩니다.
+**해결**: 회전된 가구의 Oriented Bounding Box(OBB)를 활용해, 벽에서 각 면까지의 정확한 거리를 계산했습니다. 이를 기반으로 가구가 벽에 30cm 내 접근 시 달라붙도록 구현했습니다. 또한 직교하는 두 벽이 모두 거리 조건을 만족하면 두 벽의 교차점에 달라붙도록 했습니다. O(N²)의 이중 for문으로 모든 벽의 조합을 체크하는 대신, 수평/수직 벽 중 가구와 가장 가까운 벽을 각각 순회하여 알고리즘 복잡도를 O(N)으로 유지했습니다.
 
 **결과**: 사용자가 정밀한 마우스 조작 없이도 자연스럽게 가구를 벽에 배치할 수 있게 되어 사용 편의성이 크게 향상되었습니다.
 
@@ -85,12 +90,12 @@ React Three Fiber를 이용하여 3D 인테리어 시뮬레이터 **어따놀래
   추가 설명 - 벽 자석 기능
 </a>
 
-## 4. 실시간 협업 안정화
+## 4. 실시간 협업 시 충돌 방지
 
-<img className="mx-auto max-w-lg" src="/static/images/wheretoput/wheretoput-6.png" />
+<img className="mx-auto w-full max-w-3xl" src="/static/images/wheretoput/wheretoput-6.png" />
 
 **문제**: 협업 모드에서 여러 사용자가 같은 가구를 동시에 조작할 수 있어, 충돌이 발생할 우려가 있었습니다.
 
-**해결**: **해결**: Redis Map 자료구조로 모델별 락(lock) 시스템을 구현했습니다. 사용자가 가구 선택 시 Redis에 선택한 가구의 id를 기록하여 다른 사용자의 접근을 차단하고, 말풍선을 위에 띄워 시각적으로도 표시했습니다. Cron 작업이 1분간 비활성 사용자의 락을 자동 해제하여 교착 상태를 방지합니다.
+**해결**: Redis Hash와 Socket.io를 활용한 커스텀 락 시스템을 구현했습니다. 사용자가 가구를 선택하면 백엔드가 Redis Hash에 선택한 가구 ID를 기록하고 다른 클라이언트에 브로드캐스트합니다. 이후 가구를 클릭 시 다른 사용자가 사용 중인지 검사하여 접근을 차단합니다. Cron 작업이 1분간 비활성 사용자의 락을 자동 해제하여 교착 상태를 방지합니다.
 
-**결과**: 여러 사용자가 동시에 작업할 때, 충돌이 발생할 가능성을 없앴습니다.
+**결과**: 동시 편집 충돌을 완전히 방지하여, 안정적인 협업 환경을 제공했습니다.

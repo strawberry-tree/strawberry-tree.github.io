@@ -93,8 +93,14 @@
       font-weight: 700;
       letter-spacing: var(--tracking-tight);
     }
+    & :where(h1, h2):not(:first-child) {
+      margin-top: 3rem;
+    }
     & h3 {
       font-weight: 600;
+    }
+    & h3:not(:first-child) {
+      margin-top: 2rem;
     }
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);

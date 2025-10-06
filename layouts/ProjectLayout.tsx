@@ -29,12 +29,11 @@ export default function ProjectLayout({ content, next, prev, children }: LayoutP
                 <PageTitle>{title}</PageTitle>
               </div>
               <dl className="space-y-2">
-                <div className="flex items-center space-x-2 text-base font-medium text-gray-500 dark:text-gray-400">
-                  <dt>기간:</dt>
-                  <dd>{period}</dd>
+                <div className="flex flex-col text-base font-medium text-gray-500 md:flex-row md:items-center md:space-x-2 dark:text-gray-400">
+                  <dd>기간: {period}</dd>
                   {team && (
                     <>
-                      <span>|</span>
+                      <span className="hidden md:inline">|</span> {/* 모바일에서는 | 숨김 */}
                       <dd>{team}</dd>
                     </>
                   )}
@@ -83,12 +82,14 @@ export default function ProjectLayout({ content, next, prev, children }: LayoutP
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-              <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
+              <div className="prose prose-lg dark:prose-invert max-w-none pt-10 pb-8">
+                {children}
+              </div>
             </div>
             <footer>
               <div className="divide-gray-200 text-sm leading-5 font-medium dark:divide-gray-700">
                 {(next || prev) && (
-                  <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
+                  <div className="flex flex-col justify-between space-y-4 py-4 md:flex-row md:space-y-8 md:py-8">
                     {prev && prev.path && (
                       <div>
                         <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">

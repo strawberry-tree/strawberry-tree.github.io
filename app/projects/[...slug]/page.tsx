@@ -60,7 +60,9 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
   const sortedProjects = allCoreContent(
-    allProjects.sort((a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime())
+    allProjects
+      .filter((p) => p.draft !== true)
+      .sort((a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime())
   )
   const projectIndex = sortedProjects.findIndex((p) => p.slug === slug)
 
@@ -71,6 +73,11 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   const prev = sortedProjects[projectIndex + 1]
   const next = sortedProjects[projectIndex - 1]
   const project = allProjects.find((p) => p.slug === slug) as Project
+
+  if (project.draft === true) {
+    return notFound()
+  }
+
   const mainContent = coreContent(project)
 
   return (
