@@ -1,17 +1,20 @@
 ---
 title: '어따놀래 - 우리 집 꾸미기 시뮬레이터'
-description: '생성형 AI로 제작한 3D 가구를 다른 사용자와 함께 배치할 수 있는 인테리어 시뮬레이터'
+description: 'AI로 생성한 3D 가구를 함께 배치하며 방을 꾸밀 수 있는 인테리어 시뮬레이터'
 period: '2025.08. - 2025.09. (2개월)'
 startDate: '2025-08'
 endDate: '2025-09'
 team: '크래프톤 정글 9기'
-tags: ['Next.js', 'React Three Fiber', 'Zustand', 'PostgreSQL', 'Redis', 'Socket.io', 'OpenCV.js']
+tags: ['Next.js', 'React Three Fiber', 'Socket.io', 'OpenCV.js', 'PostgreSQL', 'Redis']
 images: ['/static/images/wheretoput.png']
 github: 'https://github.com/KJ-9th-NMM-Team2/wheretoput'
 demo: 'https://wheretoput.store'
+links:
+  - url: https://www.youtube.com/embed/NzAyGC2Smv4?si=CiRqfS9y17RThK2U
+    text: 발표영상
 ---
 
-## 발표 영상
+# 프로젝트 개요
 
 <div className="mx-auto w-full max-w-[800px]" style={{ aspectRatio: '16 / 9' }}>
   <iframe
@@ -25,48 +28,69 @@ demo: 'https://wheretoput.store'
   ></iframe>
 </div>
 
-## 프로젝트 개요
+React Three Fiber를 이용하여 3D 인테리어 시뮬레이터 **어따놀래**를 개발하였습니다. OpenCV.js를 활용한 도면 업로드를 통한 방 공간 생성, [Microsoft Trellis AI](https://replicate.com/firtoz/trellis)로 생성된 가구 배치, Socket.io를 활용한 다른 사용자와의 실시간 동시편집 등 기능을 제공합니다.
 
-어따놀래는 생성형 AI 기술로 제작한 3D 가구를 여러 사용자가 동시에 배치할 수 있는 실시간 협업 인테리어 시뮬레이터입니다. 사용자들은 웹 브라우저에서 3D 공간에 가구를 배치하고 회전, 크기 조정 등을 실시간으로 함께 작업할 수 있습니다. 팀 리더로서 프로젝트 기획부터 개발, 배포까지 전 과정을 주도했으며, 특히 3D 렌더링 성능 최적화와 실시간 동기화 안정성 확보에 집중했습니다.
+크래프톤 정글 9기 최종 프로젝트로 진행하였으며, 팀 리더로서 프로젝트 기획 및 개발 전 과정을 주도했습니다. 팀원으로서는 시뮬레이터에서의 **가구 모델 관리** 및 **협업 (동시편집) 기능** 구현을 담당했습니다.
 
-## 문제 해결
+# 문제 해결
 
-### 1. 3D 모델 로딩 성능 최적화 (58% 개선)
+## 1. GLB 파일 로딩 성능 최적화
 
-**문제**: 3D 모델에 사용된 glb 파일의 평균 크기가 1.3MB로, 시뮬레이터 초기 로딩에 약 6초의 긴 시간이 발생했습니다.
+<img className="mx-auto max-w-xl" src="/static/images/wheretoput/wheretoput-1.png" />
 
-**해결**: gltf-transform과 Sharp 라이브러리를 활용한 자동 최적화 파이프라인을 구축했습니다. 메쉬 데이터는 Draco 압축과 양자화(quantization) 기법을 적용하여 위치 정보 16비트, 법선 12비트, UV 좌표 10비트로 압축했습니다. 텍스처는 1024x1024 해상도로 리사이징 후 품질 80으로 WebP 변환하여 용량을 대폭 줄였습니다.
+**문제**: Trellis AI가 생성한 3D 모델(.glb)의 평균 크기가 1.3MB로, Amazon S3에 저장된 glb 파일을 불러오는 과정에서 시간이 지연되어 시뮬레이터 초기 로딩에 약 6초의 긴 시간이 발생했습니다.
 
-**결과**: 모델 용량을 0.1MB로 92% 감소시켰고, 로딩 시간은 2.5초로 58% 개선하여 끊김 없는 사용자 경험을 제공했습니다.
+**해결**: Sharp 라이브러리를 사용하여, 텍스처의 기존의 png에서 WebP로 포맷을 변환하였습니다. 육안에 보이는 차이 없이, 평균 크기를 1.3MB에서 0.1MB로 용량을 1/12로 줄였습니다. 모델 용량을 0.1MB로 92% 감소시켰습니다. 용량이 크게 줄어, 백엔드를 담당하는 동료가 Redis에 glb 파일을 blob 형태로 캐싱해 보는 게 어떻겠냐고 제안하여 추가 조치가 이루어졌습니다.
 
-### 2. Slice 패턴 기반 상태 관리 구조 개선
+**결과**: 최종적으로 평균 로딩 시간을 6초 --> 2.5초로 58% 개선하여 끊김 없는 사용자 경험을 제공했습니다.
 
-**문제**: 초기에는 모든 상태를 하나의 Store에서 관리하여 코드가 복잡해지고, 팀원들과 협업 시 충돌이 자주 발생했습니다.
+<span className="flex gap-4">
+  <a href="https://github.com/KJ-9th-NMM-Team2/wheretoput/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EC%B1%8C%EB%A6%B0%EC%A7%80-%233-%E2%80%90-GLB-%ED%8C%8C%EC%9D%BC-%EC%95%95%EC%B6%95">
+    추가 설명 - GLB 파일 압축
+  </a>
+  <a href="https://github.com/KJ-9th-NMM-Team2/wheretoput/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EC%B1%8C%EB%A6%B0%EC%A7%80-%232-%E2%80%90-%EC%B4%88%EA%B8%B0-%EB%A1%9C%EB%94%A9-%EC%86%8D%EB%8F%84-%EA%B0%9C%EC%84%A0">
+    추가 설명 - (동료가 진행한) Redis 캐싱
+  </a>
+</span>
 
-**해결**: Zustand의 Slice 패턴을 도입하여 preview, collaboration, model, wall, environment, stacking, room, ui 총 8개의 도메인별 슬라이스로 상태를 분리했습니다. 각 슬라이스는 독립적인 상태와 액션을 가지며, 관심사별로 명확하게 구분됩니다.
+## 2. OpenCV.js 기반 도면 자동 인식
 
-**결과**: 코드 가독성과 유지보수성이 크게 향상되었고, 팀원들이 각자 담당한 도메인의 로직을 독립적으로 개발할 수 있어 협업 효율성이 개선되었습니다.
+<img className="mx-auto max-w-2xl" src="/static/images/wheretoput/wheretoput-2.png" />
 
-### 3. 실시간 협업 충돌 방지 시스템
+**문제**: 사용자가 수동으로 본인의 집의 벽을 확인해서 도면을 그리게끔 하는 것은 매우 비효율적입니다.
 
-**문제**: 다중 사용자가 동시에 가구를 드래그할 때 Socket.io 이벤트가 초당 수백 건 발생하여 서버 부하와 네트워크 병목이 발생했으며, 여러 사용자가 같은 가구를 동시에 조작하면 충돌이 발생했습니다.
+**해결**: OpenCV.js를 활용한 도면 자동 인식 파이프라인을 구현했습니다. Hough Line Transform으로 이미지에서 직선을 추출합니다. 이때 한 벽에서 여러 직선이 추출될 수 있기 때문에, 평행선 병합 알고리즘을 설계했습니다. 평행하고 가까운(15px 이내) 선분들을 그룹화하여 중심선을 계산하고, 수직/수평 선분만 필터링하여 최종 벽 구조를 도출합니다.
 
-**해결**: 클라이언트 측에서 throttling을 30ms 간격으로 적용하여 과도한 이벤트 발생을 제어했습니다. 또한 Redis 기반 방(room) 상태 관리와 Map 자료구조를 활용한 모델별 락(lock) 시스템을 구현했습니다. 사용자가 가구를 선택하면 해당 모델 ID를 Redis에 기록하여 다른 사용자의 접근을 차단하고, 1분간 활동이 없으면 Cron 작업이 락을 자동 해제하여 교착 상태를 방지합니다.
+**결과**: 도면을 업로드만 하면 3초 내로 3D 공간이 생성되어, 초기 설정 시간이 대폭 단축되었습니다.
 
-**결과**: 여러 사용자가 동시에 작업해도 충돌 없이 안정적으로 동기화되며, 서버 부하가 크게 감소했습니다.
+<a href="https://github.com/KJ-9th-NMM-Team2/wheretoput/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EC%B1%8C%EB%A6%B0%EC%A7%80-%237-%E2%80%90-%EB%8F%84%EB%A9%B4-%EB%B2%BD-%EA%B2%80%EC%B6%9C">
+  추가 설명 - 도면 벽 검출
+</a>
 
-### 4. OBB 기반 벽 자석 기능 (UX 개선)
+## 3. OBB 기반 벽 자석 기능 (UX 개선)
 
-**문제**: 가구를 벽에 정렬하는 작업이 수동으로는 매우 번거로웠으며, 특히 회전된 가구의 경우 정확한 배치가 어려웠습니다.
+<span className="flex gap-1">
+  <img className="mx-auto max-w-sm" src="/static/images/wheretoput/wheretoput-3.png" />
+  <img className="mx-auto max-w-sm" src="/static/images/wheretoput/wheretoput-5.png" />
+  <img className="mx-auto max-w-sm" src="/static/images/wheretoput/wheretoput-4.png" />
+</span>
+**문제**: React Three Fiber는 별도의 충돌 감지를 지원하지 않아, 가구를 벽에 맞춰 정렬하는 작업이
+매우 번거로웠습니다.
 
-**해결**: OBB(Oriented Bounding Box) 기반 벽 자석 기능을 개발했습니다. 가구의 회전을 고려한 실제 바운딩 박스를 계산하고, 벽의 로컬 좌표계로 변환하여 정확한 거리를 측정합니다. 가구가 벽으로부터 30cm 이내에 접근하면 자동으로 5cm 간격을 두고 스냅되며, 코너에서는 양쪽 벽 모두에 자동 정렬됩니다.
+**해결**: 가구가 벽으로부터 30cm 이내에 접근하면 자동으로 5cm 간격을 두고 스냅되는, 벽 자석 기능을 개발했습니다. 가구의 회전을 고려한 Oriented Bounding Box를 계산하고, 벽의 로컬 좌표계로 변환하여 정확한 거리를 측정합니다. 코너에서는 양쪽 벽 모두에 자동 정렬됩니다.
 
 **결과**: 사용자가 정밀한 마우스 조작 없이도 자연스럽게 가구를 벽에 배치할 수 있게 되어 사용 편의성이 크게 향상되었습니다.
 
-### 5. OpenCV.js 기반 도면 자동 인식
+<a href="https://github.com/KJ-9th-NMM-Team2/wheretoput/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EC%B1%8C%EB%A6%B0%EC%A7%80-%234-%E2%80%90-%EB%B2%BD-%EC%9E%90%EC%84%9D-%EA%B8%B0%EB%8A%A5">
+  추가 설명 - 벽 자석 기능
+</a>
 
-**문제**: 사용자가 도면 이미지를 보고 수동으로 벽 좌표를 입력하는 과정이 매우 번거롭고 시간이 오래 걸렸습니다.
+## 4. 실시간 협업 안정화
 
-**해결**: OpenCV.js를 활용한 도면 자동 인식 파이프라인을 구현했습니다. 업로드된 이미지를 그레이스케일 변환 후 Otsu 이진화를 적용하고, 모폴로지 연산으로 노이즈를 제거합니다. Canny 엣지 검출과 Hough Line Transform으로 직선을 추출한 뒤, 평행선 병합 알고리즘으로 벽 두께 문제를 해결했습니다. 평행하고 가까운(15px 이내) 선분들을 그룹화하여 중심선을 계산하고, 수직/수평 선분만 필터링하여 최종 벽 구조를 도출합니다. 검출된 2D 좌표는 픽셀-밀리미터 비율을 적용해 3D 공간의 실제 벽 오브젝트로 변환됩니다.
+<img className="mx-auto max-w-lg" src="/static/images/wheretoput/wheretoput-6.png" />
 
-**결과**: 사용자는 도면을 업로드만 하면 자동으로 3D 공간이 생성되어 초기 설정 시간이 대폭 단축되었습니다.
+**문제**: 협업 모드에서 여러 사용자가 같은 가구를 동시에 조작할 수 있어, 충돌이 발생할 우려가 있었습니다.
+
+**해결**: **해결**: Redis Map 자료구조로 모델별 락(lock) 시스템을 구현했습니다. 사용자가 가구 선택 시 Redis에 선택한 가구의 id를 기록하여 다른 사용자의 접근을 차단하고, 말풍선을 위에 띄워 시각적으로도 표시했습니다. Cron 작업이 1분간 비활성 사용자의 락을 자동 해제하여 교착 상태를 방지합니다.
+
+**결과**: 여러 사용자가 동시에 작업할 때, 충돌이 발생할 가능성을 없앴습니다.

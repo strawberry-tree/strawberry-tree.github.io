@@ -15,9 +15,8 @@
   "pydantic": 1,
   "nextjs": 1,
   "react-three-fiber": 1,
-  "zustand": 1,
-  "postgresql": 1,
-  "redis": 1,
   "socketio": 1,
-  "opencvjs": 1
+  "opencvjs": 1,
+  "postgresql": 1,
+  "redis": 1
 }
