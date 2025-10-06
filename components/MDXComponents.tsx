@@ -6,7 +6,6 @@ import Image from './Image'
 import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
 import Tag from './Tag'
-import { User, Code, Folder, BookOpen, Award } from 'lucide-react'
 
 export const components: MDXComponents = {
   Image,
@@ -16,9 +15,4 @@ export const components: MDXComponents = {
   table: TableWrapper,
   BlogNewsletterForm,
   Tag,
-  User,
-  Code,
-  Folder,
-  BookOpen,
-  Award,
 }
