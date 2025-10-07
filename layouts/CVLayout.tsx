@@ -70,7 +70,7 @@ export default function CVLayout({ content, children }: LayoutProps) {
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-              <div className="prose prose-lg dark:prose-invert max-w-none pt-10 pb-8 [&_ul]:marker:text-primary-500 [&_a]:text-primary-500 [&_a]:underline [&_a]:decoration-primary-500 [&_a:hover]:text-primary-600 dark:[&_a]:text-primary-400 dark:[&_a:hover]:text-primary-300">
+              <div className="prose prose-lg dark:prose-invert max-w-none pt-10 pb-8 [&_ul]:marker:text-primary-500 [&_a]:text-primary-500 [&_a:hover]:text-primary-600 dark:[&_a]:text-primary-400 dark:[&_a:hover]:text-primary-300">
                 {children}
               </div>
             </div>
