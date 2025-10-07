@@ -12,16 +12,16 @@ github: 'https://github.com/freud-sensei/test_maker'
 
 ## 프로젝트 개요
 
-<div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
+<div className="grid grid-cols-1 lg:grid-cols-12 print:grid-cols-12 gap-2">
   {/* 좌측 큰 이미지 */}
   <img
     src="/static/images/test-maker/test-maker-1a.png"
-    className="w-full h-auto object-cover lg:col-span-6"
+    className="w-full h-auto object-cover lg:col-span-6 print:col-span-6"
   />
 
 {/* 우측 작은 이미지들 */}
 
-  <div className="grid grid-cols-1 gap-2 lg:col-span-6">
+  <div className="grid grid-cols-1 gap-2 lg:col-span-6 print:col-span-6">
     <img
       src="/static/images/test-maker/test-maker-1b.png"
       className="!my-0 w-full h-auto object-cover"
@@ -44,7 +44,7 @@ github: 'https://github.com/freud-sensei/test_maker'
 
 > 학생들이 직접 정리한 내용을 바탕으로 학습할 수 있어 자율 학습에 큰 도움이 될 것으로 보입니다.
 
-<span className="flex flex-col gap-4 md:flex-row">
+<span className="flex flex-col gap-4 md:flex-row print:flex-row">
   <a href="https://github.com/strawberry-tree/test_maker/blob/main/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC%EC%99%80%EA%B5%90%EC%9C%A1_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%EC%86%A1%EC%83%81%EB%A1%9D.pdf">
     추가 설명 - 프롬프팅 구현과정
   </a>
@@ -55,11 +55,19 @@ github: 'https://github.com/freud-sensei/test_maker'
 
 ## 문제 해결
 
+<div className="hidden print:mb-2 print:grid print:grid-cols-2">
+  <img src="/static/images/test-maker/test-maker-2.png" />
+  <img src="/static/images/test-maker/test-maker-3.png" />
+</div>
+
 ### 1. Pydantic 스키마로 LLM 출력 안정화
 
 **문제**: 모의고사를 제작하기 위해 (문제 목록 → 각 문제 → 정답/오답 선지)의 중첩된 구조로 응답을 받아야 했습니다. 그러나 GPT-4는 응답 형식이 자유로워, 단순 프롬프트만으로 구조를 명시할 경우 GPT-4가 구조를 정확히 지키지 않아 실패하는 경우가 있었습니다.
 
-<img className="mx-auto block w-full max-w-md" src="/static/images/test-maker/test-maker-2.png" />
+<img
+  className="mx-auto w-full max-w-md print:hidden"
+  src="/static/images/test-maker/test-maker-2.png"
+/>
 
 **해결**: **Pydantic 스키마**로 클래스 필드의 타입과 설명을 정의하고, **Langchain**을 통해 GPT-4가 반드시 이 구조로만 응답하도록 강제했습니다. `SingleQuestion`과 `Questionmaker` 2개 클래스를 중첩하여 사용함으로써, 복잡한 모의고사 구조도 자동으로 검증 및 파싱되도록 구현했습니다.
 
@@ -69,7 +77,10 @@ github: 'https://github.com/freud-sensei/test_maker'
 
 **문제**: 파일 업로드 → 문제 풀이 → 채점 및 해설의 3단계 흐름을 개별 화면으로 구현해야 했는데, Streamlit은 화면이 전환될 때마다 스크립트를 처음부터 재실행하여 변수가 초기화되었습니다. 이로 인해 GPT API 호출 결과가 손실되어 비용이 중복 발생할 수 있는 문제가 있었습니다.
 
-<img className="mx-auto block w-full max-w-md" src="/static/images/test-maker/test-maker-3.png" />
+<img
+  className="mx-auto w-full max-w-md print:hidden"
+  src="/static/images/test-maker/test-maker-3.png"
+/>
 
 **해결**: **현재 진행 단계**, **문제 데이터**, **사용자가 제출한 정답 데이터**를 **세션 state에 저장**하였습니다. 3단계 흐름이 진행되는 동안 **세션에 저장된 데이터를 재사용**하여 불필요한 API 재호출을 방지했습니다.
 

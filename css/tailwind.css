@@ -7,7 +7,8 @@
 /* Core theme configuration */
 @theme {
   /* Font families */
-  --font-sans: var(--font-pretendard), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+  --font-sans:
+    var(--font-pretendard), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /* Colors */
@@ -178,4 +179,138 @@ input:-webkit-autofill:focus {
 .linkicon {
   display: inline-block;
   vertical-align: middle;
+}
+
+/* Print styles for A4 format */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.2cm 1.2cm 1.2cm 1.2cm;
+  }
+
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  }
+
+  body {
+    font-feature-settings: 'kern', 'liga', 'clig';
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    white-space: normal;
+    background-color: oklch(0.985 0.002 247.839) !important; /* gray-50 */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  section {
+    break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  .page-break {
+    display: block; /* 블록처럼 취급 */
+    height: 0; /* 공간 차지 없음 */
+    margin: 0;
+    padding: 0;
+    break-before: page; /* 새 페이지에서 시작 */
+  }
+
+  /* Compact spacing for CV */
+  .prose {
+    padding-top: 1rem !important;
+    font-size: 11pt !important;
+    line-height: 2 !important;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .prose h2 {
+    font-size: 16pt !important;
+    margin-top: 0.4rem !important;
+    margin-bottom: 0.7rem !important;
+    page-break-after: avoid;
+  }
+
+  .prose h3 {
+    font-size: 14pt !important;
+    margin-top: 1.2rem !important;
+    margin-bottom: 0.4rem !important;
+    page-break-after: avoid;
+    page-break-before: auto;
+  }
+
+  .prose h3:first-of-type {
+    margin-top: 0 !important;
+  }
+
+  .prose p {
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .prose ul {
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
+    page-break-inside: avoid;
+  }
+
+  .prose li {
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.1rem !important;
+    page-break-inside: avoid;
+  }
+
+  /* Reduce header spacing */
+  header {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+  }
+
+  header .space-y-4 > * + * {
+    margin-top: 0.3rem !important;
+  }
+
+  header h1 {
+    font-size: 18pt !important;
+    margin-bottom: 0.15rem !important;
+  }
+
+  header p {
+    font-size: 11pt !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Hide unnecessary elements */
+  nav,
+  footer,
+  .scroll-top,
+  button {
+    display: none !important;
+  }
+
+  /* Remove divider lines */
+  .divide-y > *,
+  .divide-gray-200 > *,
+  .divide-gray-700 > * {
+    border-top: none !important;
+    border-bottom: none !important;
+  }
+
+  /* Prevent page breaks in projects */
+  .prose > div,
+  .prose > section,
+  table,
+  ul,
+  ol {
+    page-break-inside: avoid;
+  }
+
+  /* Compact horizontal rule */
+  hr {
+    display: none !important;
+  }
 }

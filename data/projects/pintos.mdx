@@ -18,9 +18,9 @@ Stanford 대학의 교육용 운영체제 Pintos를 기반으로 쓰레드 관�
 
 ### 1. Fork 예외 처리
 
-<span className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-1">
-  <img className="!my-0" src="/static/images/pintos/pintos_1.png" />
-  <img className="!my-0" src="/static/images/pintos/pintos_2.png" />
+<span className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-1">
+  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_1.png" />
+  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_2.png" />
 </span>
 
 **문제**: Fork 시스템 콜 발생 시, 부모 프로세스는 자식 프로세스 생성을 요청한 후 세마포어로 대기합니다. 자식이 부모의 자원을 복제하는 중에 실패해 종료되더라도, 부모는 자식의 성공 여부를 알 수 없어 이미 종료된 프로세스의 ID를 반환하는 문제가 발생했습니다.
@@ -33,9 +33,9 @@ Stanford 대학의 교육용 운영체제 Pintos를 기반으로 쓰레드 관�
 
 ### 2. 페이지 폴트 시 스택 확장
 
-<span className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-1">
-  <img className="!my-0" src="/static/images/pintos/pintos_3.png" />
-  <img className="!my-0" src="/static/images/pintos/pintos_4.png" />
+<span className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-1">
+  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_3.png" />
+  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_4.png" />
 </span>
 
 **문제**: 가상 메모리 시스템에서 스택 영역에 접근할 때 페이지가 할당되지 않았으면 페이지 폴트가 발생합니다. 이때 큰 배열을 스택에 할당하면 스택 포인터가 여러 페이지를 한 번에 건너뛸 수 있는데, 테스트에서 65536바이트(16페이지)를 한 번에 요구하는 경우가 있었습니다. 기존엔 `push` 명령어의 존재 때문에 8바이트 단위로만 푸시가 이루어지므로 페이지 1개만 할당하면 된다고 생각했으나, 오개념이였습니다.

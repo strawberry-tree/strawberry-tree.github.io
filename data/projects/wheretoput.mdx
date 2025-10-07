@@ -17,7 +17,7 @@ links:
 
 ## 프로젝트 개요
 
-<div className="mx-auto w-full max-w-[800px]" style={{ aspectRatio: '16 / 9' }}>
+<div className="mx-auto w-full max-w-[800px] print:hidden" style={{ aspectRatio: '16 / 9' }}>
   <iframe
     className="h-full w-full"
     src="https://www.youtube.com/embed/NzAyGC2Smv4?si=CiRqfS9y17RThK2U"
@@ -28,6 +28,15 @@ links:
     allowFullScreen={true}
   ></iframe>
 </div>
+
+<img
+  className="mx-auto hidden max-w-lg print:block"
+  src="/static/images/wheretoput/wheretoput-7.png"
+></img>
+<img
+  className="mx-auto w-full max-w-2xl print:max-w-lg"
+  src="/static/images/wheretoput/wheretoput-8.png"
+></img>
 
 **어따놀래**는 React Three Fiber 기반의 3D 인테리어 시뮬레이터이며, 아래와 같은 기능을 제공합니다.
 
@@ -41,7 +50,7 @@ links:
 
 ### 1. GLB 파일 로딩 성능 최적화
 
-<img className="mx-auto w-full max-w-2xl" src="/static/images/wheretoput/wheretoput-1.png" />
+<img className="mx-auto w-full print:max-w-lg" src="/static/images/wheretoput/wheretoput-1.png" />
 
 **문제**: AI 생성 3D 모델(.glb)의 평균 크기가 1.3MB로, Amazon S3에서 모델을 불러오는 과정이 지연되어 시뮬레이터 초기 로딩에 약 6초가 소요되었습니다.
 
@@ -49,7 +58,7 @@ links:
 
 **결과**: 평균 로딩 시간을 6초에서 2.5초로 58% 개선하여 끊김 없는 사용자 경험을 제공했습니다.
 
-<span className="flex flex-col gap-0 md:flex-row md:gap-4">
+<span className="flex flex-col gap-0 md:flex-row md:gap-4 print:flex-row print:gap-4">
   <a href="https://github.com/KJ-9th-NMM-Team2/wheretoput/wiki/%EA%B8%B0%EC%88%A0%EC%A0%81-%EC%B1%8C%EB%A6%B0%EC%A7%80-%233-%E2%80%90-GLB-%ED%8C%8C%EC%9D%BC-%EC%95%95%EC%B6%95">
     추가 설명 - GLB 파일 압축
   </a>
@@ -60,7 +69,10 @@ links:
 
 ### 2. OpenCV.js 기반 도면 자동 인식
 
-<img className="mx-auto w-full max-w-3xl" src="/static/images/wheretoput/wheretoput-2.png" />
+<img
+  className="mx-auto w-full max-w-3xl print:w-lg"
+  src="/static/images/wheretoput/wheretoput-2.png"
+/>
 
 **문제**: 사용자가 수동으로 본인의 집의 벽을 확인해서 도면을 그리게끔 하는 것은 매우 비효율적입니다.
 
@@ -74,11 +86,27 @@ links:
 
 ### 3. 코너 벽 자석 기능의 성능 최적화
 
-<span className="flex flex-col space-y-0 md:flex-row">
-  <img className="mx-auto !my-0 w-full max-w-sm" src="/static/images/wheretoput/wheretoput-3.png" />
-  <img className="mx-auto !my-0 w-full max-w-sm" src="/static/images/wheretoput/wheretoput-5.png" />
-  <img className="mx-auto !my-0 w-full max-w-sm" src="/static/images/wheretoput/wheretoput-4.png" />
-</span>
+<div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 print:grid-cols-3">
+  <div className="aspect-[4/3] w-full overflow-hidden">
+    <img
+      className="h-full w-full object-cover object-center"
+      src="/static/images/wheretoput/wheretoput-3.png"
+    />
+  </div>
+  <div className="aspect-[4/3] w-full overflow-hidden">
+    <img
+      className="h-full w-full object-cover object-center"
+      src="/static/images/wheretoput/wheretoput-5.png"
+    />
+  </div>
+  <div className="aspect-[4/3] w-full overflow-hidden">
+    <img
+      className="h-full w-full object-cover object-center"
+      src="/static/images/wheretoput/wheretoput-4.png"
+    />
+  </div>
+</div>
+
 **문제**: React Three Fiber는 별도의 충돌 감지를 지원하지 않아 가구를 벽에 맞춰 정렬하는 작업이 매우
 번거로웠습니다.
 
@@ -92,7 +120,10 @@ links:
 
 ### 4. 실시간 협업 시 충돌 방지
 
-<img className="mx-auto w-full max-w-3xl" src="/static/images/wheretoput/wheretoput-6.png" />
+<img
+  className="mx-auto w-full max-w-3xl print:w-lg"
+  src="/static/images/wheretoput/wheretoput-6.png"
+/>
 
 **문제**: 협업 모드에서 여러 사용자가 같은 가구를 동시에 조작할 수 있어, 충돌이 발생할 우려가 있었습니다.
 
