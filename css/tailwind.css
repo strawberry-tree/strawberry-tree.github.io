@@ -309,6 +309,12 @@ input:-webkit-autofill:focus {
     page-break-inside: avoid;
   }
 
+  /* Ensure article takes full width */
+  article {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
   /* Compact horizontal rule */
   hr {
     display: none !important;

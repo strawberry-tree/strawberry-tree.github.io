@@ -25,14 +25,14 @@ export default function Projects() {
           <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100 print:hidden">
             Projects
           </h1>
-          <h1 className="hidden text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100 print:block">
+          <h1 className="print: mb-2 hidden text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100 print:block">
             송상록
           </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400 print:hidden">
-            현재까지 진행했던 프로젝트들입니다.
+          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+            지금까지 진행했던 프로젝트를 모아둔 포트폴리오입니다.
           </p>
-          <p className="hidden text-lg text-xl leading-7 text-gray-700 dark:text-gray-300 print:block">
-            보다 편리하게 프로젝트를 확인하시려면{' '}
+          <p className="hidden text-lg leading-7 font-bold text-gray-500 dark:text-gray-400 print:block">
+            PDF보단{' '}
             <a
               href="https://strawberry-tree.github.io/projects"
               className="text-primary-600 dark:text-primary-400 underline"
@@ -42,7 +42,7 @@ export default function Projects() {
             의 이용을 추천드립니다.
           </p>
         </div>
-        <div className="container py-12 print:pt-0">
+        <div className="container py-12 print:w-full print:max-w-full print:px-0 print:pt-0">
           <div className="space-y-8">
             {projects.map((project) => {
               const imgSrc = Array.isArray(project.images) ? project.images[0] : project.images
