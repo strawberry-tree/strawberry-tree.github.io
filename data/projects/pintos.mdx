@@ -13,15 +13,15 @@ pages: '5-6페이지'
 
 ## 프로젝트 개요
 
-Stanford 대학의 교육용 운영체제 Pintos를 기반으로 쓰레드 관리, 시스템 콜, 가상 메모리 시스템을 직접 구현하는 프로젝트입니다. 운영체제 이론을 학습할 수 있는 기회였으며, C언어를 사용하면서 강타입 언어에 익숙해지는 계기도 되었습니다.
+Stanford 대학의 교육용 운영체제 Pintos를 기반으로 쓰레드 관리, 시스템 콜, 가상 메모리 시스템을 직접 구현하는 프로젝트입니다. 디버깅 과정에서 운영체제가 작동하는 전체 그림을 깊이 이해할 수 있었습니다. C언어를 사용하면서 강타입 언어에 익숙해지는 계기도 되었습니다.
 
 ## 문제 해결
 
 ### 1. Fork 예외 처리
 
 <span className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-1">
-  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_1.png" />
-  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_2.png" />
+  <img className="!my-0 print:max-w-xl" src="/static/images/pintos/pintos_1.png" />
+  <img className="!my-0 print:max-w-xl" src="/static/images/pintos/pintos_2.png" />
 </span>
 
 **문제**: Fork 시스템 콜 발생 시, 부모 프로세스는 자식 프로세스 생성을 요청한 후 세마포어로 대기합니다. 자식이 부모의 자원을 복제하는 중에 실패해 종료되더라도, 부모는 자식의 성공 여부를 알 수 없어 이미 종료된 프로세스의 ID를 반환하는 문제가 발생했습니다.
@@ -35,8 +35,8 @@ Stanford 대학의 교육용 운영체제 Pintos를 기반으로 쓰레드 관�
 ### 2. 페이지 폴트 시 스택 확장
 
 <span className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-1">
-  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_3.png" />
-  <img className="!my-0 print:max-w-lg" src="/static/images/pintos/pintos_4.png" />
+  <img className="!my-0 print:max-w-xl" src="/static/images/pintos/pintos_3.png" />
+  <img className="!my-0 print:max-w-xl" src="/static/images/pintos/pintos_4.png" />
 </span>
 
 **문제**: 가상 메모리 시스템에서 스택 영역에 접근할 때 페이지가 할당되지 않았으면 페이지 폴트가 발생합니다. 이때 큰 배열을 스택에 할당하면 스택 포인터가 여러 페이지를 한 번에 건너뛸 수 있는데, 테스트에서 65536바이트(16페이지)를 한 번에 요구하는 경우가 있었습니다. 기존엔 `push` 명령어의 존재 때문에 8바이트 단위로만 푸시가 이루어지므로 페이지 1개만 할당하면 된다고 생각했으나, 오개념이였습니다.
@@ -46,7 +46,3 @@ Stanford 대학의 교육용 운영체제 Pintos를 기반으로 쓰레드 관�
 <a href="https://velog.io/@strawberry-tree/0813-%EB%B0%9C%ED%91%9C-%EC%8A%A4%ED%83%9D%EC%97%90-%EA%B0%92%EC%9D%84-%ED%91%B8%EC%8B%9C%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95">
   추가 설명 - 스택 확장
 </a>
-
-## 회고
-
-핀토스는 "모르면 맞으면서 배우는" 과제였습니다. 특히 예외 처리의 중요성을 절실히 느꼈는데, fork 실패 케이스를 놓쳤을 때 디버깅이 극도로 어려웠습니다. 또한 스택 확장 방식을 몰라 수많은 테스트 실패를 겪었지만, 디버깅 과정에서 운영체제가 작동하는 전체 그림을 깊이 이해할 수 있었습니다. 어려웠지만 확실히 성장한 프로젝트였습니다.

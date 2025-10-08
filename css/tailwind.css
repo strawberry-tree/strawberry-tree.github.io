@@ -223,7 +223,7 @@ input:-webkit-autofill:focus {
   .prose {
     padding-top: 1rem !important;
     font-size: 11pt !important;
-    line-height: 2 !important;
+    line-height: 1.5 !important;
     word-break: keep-all;
     overflow-wrap: break-word;
   }
@@ -253,8 +253,8 @@ input:-webkit-autofill:focus {
   }
 
   .prose ul {
-    margin-top: 0.2rem !important;
-    margin-bottom: 0.2rem !important;
+    margin-top: 0.6rem !important;
+    margin-bottom: 0.6rem !important;
     page-break-inside: avoid;
   }
 
@@ -281,7 +281,7 @@ input:-webkit-autofill:focus {
 
   header p {
     font-size: 11pt !important;
-    line-height: 1.25 !important;
+    line-height: 1.5 !important;
   }
 
   /* Hide unnecessary elements */
