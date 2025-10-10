@@ -184,6 +184,7 @@ export const CV = defineDocumentType(() => ({
     avatar: { type: 'string' },
     occupation: { type: 'string' },
     email: { type: 'string' },
+    phone: { type: 'string' },
     github: { type: 'string' },
     linkedin: { type: 'string' },
     links: { type: 'json' },

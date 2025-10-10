@@ -12,7 +12,7 @@ interface LayoutProps {
 }
 
 export default function CVLayout({ content, children }: LayoutProps) {
-  const { name, occupation, email, github, linkedin, links } = content
+  const { name, occupation, email, phone, github, linkedin, links } = content
 
   return (
     <SectionContainer>
@@ -25,15 +25,26 @@ export default function CVLayout({ content, children }: LayoutProps) {
                 <PageTitle>{name}</PageTitle>
               </div>
               <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">{occupation}</p>
-              {email && (
-                <p className="text-base">
-                  <a
-                    href={`mailto:${email}`}
-                    className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 underline"
-                  >
-                    {email}
-                  </a>
-                </p>
+              {(email || phone) && (
+                <div className="flex flex-wrap items-center gap-2 text-base">
+                  {email && (
+                    <a
+                      href={`mailto:${email}`}
+                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 underline"
+                    >
+                      {email}
+                    </a>
+                  )}
+                  {email && phone && <span className="text-gray-400">|</span>}
+                  {phone && (
+                    <a
+                      href={`tel:${phone}`}
+                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 underline"
+                    >
+                      {phone}
+                    </a>
+                  )}
+                </div>
               )}
               {(github || linkedin || links) && (
                 <div className="flex flex-wrap gap-4">
