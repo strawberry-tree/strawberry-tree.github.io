@@ -12,20 +12,25 @@ links:
     layout: 'CVLayout'
 ---
 
-<section className="print:page-break-inside-avoid">
+기술적 깊이를 바탕으로 사용자 경험을 향상시키는 것을 최우선으로 생각하는 송상록입니다. 3D 인테리어 시뮬레이터 개발에서 텍스처를 WebP로 변환해 모델 용량을 92% 압축했고, 이것이 백엔드의 Redis 캐싱 제안으로 이어져 로딩 속도를 58% 개선했습니다. 또한 벽 자석 기능의 알고리즘을 O(N²)에서 O(N)으로 최적화하며 잠재적 병목을 미리 해결했습니다. 문제를 발견하고, 기술적 해결책을 제시하며, 팀과 협력해 더 나은 결과를 만드는 데 기여하고 싶습니다.
 
-저는 성능 최적화와 시스템 안정화를 통해 사용자 경험을 향상하는 것을 중요하게 생각합니다. 3D 웹 애플리케이션 프로젝트에서 모델 로딩 시간을 58% 단축하고, 락 시스템을 구현해 실시간 협업 환경을 안정화한 경험이 있습니다. 이러한 경험을 바탕으로, 사용자 관점에서 문제를 분석하고 기술적 깊이를 활용하여 더 빠르고 안정적인 서비스를 만들어가고 싶습니다.
-
-</section>
-
----
-
-## 기술 스택
-
-<section className="print:page-break-inside-avoid">
-
-<Tag text="JavaScript" /><Tag text="Next.js" /> <Tag text="React" /> <Tag text="PostgreSQL" /> <Tag text="Express.js" /> <Tag text="Flask" />
-</section>
+<div className="space-y-2">
+  <div className="flex items-center gap-2">
+    <span className="min-w-[80px] font-semibold">핵심 기술</span>
+    <div className="flex flex-wrap gap-1">
+      <Tag text="TypeScript" /> <Tag text="React" /> <Tag text="Next.js (Client + Server)" />
+    </div>
+  </div>
+  <div className="flex items-center gap-2">
+    <span className="min-w-[80px] font-semibold">보조 기술</span>
+    <div className="flex flex-wrap gap-1">
+      <Tag text="PostgreSQL" /> <Tag text="MongoDB" /> <Tag text="Flask" />
+      <Tag text="pandas" />
+      <Tag text="AWS" />
+      <Tag text="Redis" />
+    </div>
+  </div>
+</div>
 
 ---
 
@@ -44,7 +49,7 @@ AI로 생성한 3D 가구를 함께 배치하며 방을 꾸밀 수 있는 인테
 - **팀 리더**로서 기획, 개발, 배포 전 과정 총괄
 - Draco 압축 + WebP 텍스처 변환으로 **3D 모델 용량 92% 감소**(1.3MB → 0.1MB) 및 **초기 로딩 속도 58% 개선**(6s → 2.5s)
 - Socket.io + Redis 기반 락 시스템으로 **다중 사용자 동시 수정 충돌 방지**
-- **벽 자석 기능**: OBB 좌표 변환으로 가구-벽 근접 시 위치를 보정하여, 수동 정렬 불편 해소
+- **벽 자석 기능**: OBB 좌표 변환으로 가구-벽 근접 시 위치 보정 및 성능 병목 개선 (O(N^2) -> O(N))
 - **도면 자동 인식**: OpenCV.js의 Hough Transformation 활용 및 평행선 병합 로직 구현
 
 </section>
@@ -102,32 +107,15 @@ GPT-4 API를 활용해 학습 자료(PDF, docx, txt)로부터 객관식 문제�
 **크래프톤 정글 9기** | 2025.05 - 2025.10
 
 - 5개월 집중 합숙을 통한 CS 기초(자료구조, 알고리즘, 컴퓨터 구조, 운영체제) 강화
-- 로우레벨 C 프로그래밍을 통한 메모리 할당기, 웹 서버, 운영체제 구현 등 실전 프로젝트 수행
+- 로우레벨 C 프로그래밍을 통한 메모리 할당기, 웹 서버, 운영체제 구현 등 프로젝트 수행
 
-**서울대학교 심리학과** | 2019.03 - 2025.02 (졸업)
+**서울대학교 심리학과** | 2019.03 - 2025.02 (학사 졸업)
 
-- [**인간공학심리학 연구실 인턴**](https://hfpsych.snu.ac.kr) (2024.07 – 2025.02): R, pandas, scipy.stats 사용한 실험 통계분석 업무 수행
-- [**스누로 진로멘토링**](https://educenter.snu.ac.kr/%EC%8A%A4%EB%88%84%EB%A1%9C/) (2022.10 - 2024.08): 시흥시 중, 고등학생 대상 비대면 모의면접 및 학습 상담 진행
-- [**프로네시스 나눔실천단 나눔교실 교육봉사**](https://www.instagram.com/snu_phronesis/) (2023.02): 충북 영동 황간고등학교에서 5박 6일 간 학습법 수업, 학습 상담 진행
-
-</section>
-
----
-
-<section className="hidden">
-## 자기소개서
-### 버즈빌과 프론트엔드 직무를 선택한 이유
-
-성능 최적화와 시스템 안정화가 좋은 사용자 경험의 핵심이라고 믿습니다. 프론트엔드는 사용자가 직접 체감하는 영역이기에 기술적 개선이 즉각적인 만족도로 연결됩니다. 버즈빌의 게임 광고는 로딩 지연이 이탈률로 직결되는 환경이라는 점에서, 성능 개선이 곧 비즈니스 가치인 구조가 매력적이었습니다. '어따놀래'에서 로딩 시간을 58% 단축한 경험을 게임 광고 최적화에 기여하고 싶습니다.
-
-### 팀이 인지하지 못한 문제 발견과 해결
-
-팀이 로딩 지연을 서버 문제로만 보던 시점에 실제 병목이 파일 크기와 포맷에 있음을 분석했습니다. 이미지 압축 라이브러리로 텍스처를 최적화해 용량을 92% 감소시켰고, 백엔드 동료의 캐싱 제안과 결합해 로딩을 6초에서 2.5초로 개선했습니다. 실시간 협업에서는 충돌이 서비스 신뢰도에 치명적이라 판단하고 인메모리 데이터베이스 기반 락 시스템으로 안정성을 확보했습니다.
-
-### 협업 주도 경험
-
-리더로서 디자이너가 제기한 수동 도면 입력 문제를 컴퓨터 비전 기반 자동 인식으로 해결했고, 백엔드와는 분산 락 구조를 논의하며 시스템 안정성을 확보했습니다. 기술 결정이 팀 목표와 사용자 경험에 미치는 영향을 체감하며 협업 방법을 배웠습니다.
+- 학사졸업연구 - [**불안장애 치료 인공지능의 대화 전략 연구: 치료 성공사례 언급을 중심으로**](https://github.com/strawberry-tree/anxiety_chatbot/blob/main/%EC%8B%AC%EB%A6%AC%ED%95%99%EA%B3%BC_%EC%86%A1%EC%83%81%EB%A1%9D_%ED%95%99%EB%B6%80%EC%A1%B8%EC%97%85%EB%85%BC%EB%AC%B8_%EC%B5%9C%EC%A2%85.pdf)
+  - Langchain + GPT-4o API 기반 불안장애 치료 대화 시스템 설계 및 구현
+  - 치료 성공사례 언급 전략의 효과 통계 검증 (pandas, scipy.stats 활용)
+- 고등학생 대상 진로·학습 교육 및 멘토링
+  - 시흥시 고등학교 방문 특강 - [**사회과학 전공 소개**](https://drive.google.com/file/d/1DjVY872bCv5r2hoqz_mmN7X9MJ8BpKoh/view?usp=sharing) (서울대학교 교육협력센터, 2022.10~2024.08)
+  - 충북 황간고 5박 6일 방문 교육봉사 - [**학생 학업 및 고민상담 수행**](https://drive.google.com/file/d/1UKpWGjgqVjfx1iCKnvOxczPR0S2P0c3F/view?usp=sharing) (프로네시스 나눔실천단 나눔교실, 2023.02)
 
 </section>
-
----

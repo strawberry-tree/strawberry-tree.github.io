@@ -19,7 +19,7 @@ export default function CVLayout({ content, children }: LayoutProps) {
       <ScrollTop />
       <article>
         <div>
-          <header className="pt-6 xl:pb-6">
+          <header className="pt-6">
             <div className="space-y-4">
               <div>
                 <PageTitle>{name}</PageTitle>

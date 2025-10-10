@@ -266,7 +266,7 @@ input:-webkit-autofill:focus {
 
   /* Compact spacing for CV */
   .prose {
-    padding-top: 1rem !important;
+    padding-top: 0.5rem !important;
     font-size: 11pt !important;
     line-height: 1.5 !important;
     word-break: keep-all;
@@ -286,10 +286,6 @@ input:-webkit-autofill:focus {
     margin-bottom: 0.4rem !important;
     page-break-after: avoid;
     page-break-before: auto;
-  }
-
-  .prose h3:first-of-type {
-    margin-top: 0 !important;
   }
 
   .prose p {
