@@ -22,7 +22,7 @@ export default function ProjectLayout({ content, next, prev, children }: LayoutP
     <SectionContainer>
       <ScrollTop />
       <article>
-        <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
+        <div>
           <header className="pt-6 xl:pb-6">
             <div className="space-y-4">
               <div>
@@ -80,7 +80,7 @@ export default function ProjectLayout({ content, next, prev, children }: LayoutP
               )}
             </div>
           </header>
-          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
+          <div className="mt-4 grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div className="prose prose-lg dark:prose-invert max-w-none pt-10 pb-8">
                 {children}

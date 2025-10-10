@@ -80,9 +80,21 @@
 }
 
 @layer utilities {
+  .prose hr {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
   .prose {
+    padding-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+
     & a {
       color: var(--color-primary-500);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 5px;
       &:hover {
         color: var(--color-primary-600);
       }
@@ -90,21 +102,46 @@
         color: var(--color-primary-400);
       }
     }
-    & :where(h1, h2) {
+    & :where(h1) {
+      font-size: 2rem;
       font-weight: 700;
       letter-spacing: var(--tracking-tight);
+      margin-top: 0;
+      margin-bottom: 1rem;
     }
-    & :where(h1, h2):not(:first-child) {
-      margin-top: 1rem;
+    & :where(h2) {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: 0.75rem;
     }
     & h3 {
+      font-size: 1.25rem;
       font-weight: 600;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
     }
-    & h3:not(:first-child) {
-      margin-top: 2rem;
+    & p {
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    & ul,
+    & ol {
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    & li {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
     }
     & :where(code):not(pre code) {
       color: var(--color-indigo-500);
+      font-size: 0.9em;
+    }
+    & pre {
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
   }
 
@@ -120,6 +157,15 @@
     }
     & :where(h1, h2, h3, h4, h5, h6) {
       color: var(--color-gray-100);
+    }
+  }
+
+  @media print {
+    /* Compact horizontal rule */
+    .prose hr {
+      padding: 0;
+      margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
     }
   }
 }
@@ -208,7 +254,6 @@ input:-webkit-autofill:focus {
 
   section {
     break-inside: avoid;
-    margin-bottom: 2rem;
   }
 
   .page-break {
@@ -248,8 +293,12 @@ input:-webkit-autofill:focus {
   }
 
   .prose p {
-    margin-top: 0.3rem !important;
-    margin-bottom: 0.3rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .prose p + h2 {
+    margin-top: 1.2rem !important;
   }
 
   .prose ul {
@@ -313,10 +362,5 @@ input:-webkit-autofill:focus {
   article {
     max-width: 100% !important;
     width: 100% !important;
-  }
-
-  /* Compact horizontal rule */
-  hr {
-    display: none !important;
   }
 }
