@@ -314,15 +314,15 @@ input:-webkit-autofill:focus {
   }
 
   .prose li {
-    margin-top: 0.1rem !important;
-    margin-bottom: 0.1rem !important;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
     page-break-inside: avoid;
   }
 
   .prose li > ul,
   .prose li > ol {
-    margin-top: 0.1rem !important;
-    margin-bottom: 0.1rem !important;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
   }
 
   /* Reduce header spacing */
