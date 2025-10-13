@@ -52,17 +52,18 @@ export default function ProjectLayout({ content, next, prev, children }: LayoutP
                   {github && (
                     <Link
                       href={github}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 print:underline"
                     >
-                      GitHub →
+                      GitHub<span className="print:hidden"> →</span>
                     </Link>
                   )}
                   {demo && (
                     <Link
                       href={typeof demo === 'string' ? demo : demo.url}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 print:underline"
                     >
-                      {typeof demo === 'string' ? 'Demo' : demo.text} →
+                      {typeof demo === 'string' ? 'Demo' : demo.text}
+                      <span className="print:hidden"> →</span>
                     </Link>
                   )}
                   {links &&
@@ -71,9 +72,10 @@ export default function ProjectLayout({ content, next, prev, children }: LayoutP
                       <Link
                         key={index}
                         href={link.url}
-                        className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                        className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 print:underline"
                       >
-                        {link.text} →
+                        {link.text}
+                        <span className="print:hidden"> →</span>
                       </Link>
                     ))}
                 </div>

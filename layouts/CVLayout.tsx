@@ -20,11 +20,11 @@ export default function CVLayout({ content, children }: LayoutProps) {
       <article>
         <div>
           <header className="pt-6">
-            <div className="space-y-4">
+            <div className="space-y-4 print:space-y-1">
               <div>
                 <PageTitle>{name}</PageTitle>
               </div>
-              <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">{occupation}</p>
+              <p className="text-lg leading-4 text-gray-500 dark:text-gray-400">{occupation}</p>
               {(email || phone) && (
                 <div className="flex flex-wrap items-center gap-2 text-base">
                   {email && (
@@ -51,7 +51,7 @@ export default function CVLayout({ content, children }: LayoutProps) {
                   {github && (
                     <Link
                       href={github}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 print:underline"
                     >
                       GitHub →
                     </Link>
@@ -59,7 +59,7 @@ export default function CVLayout({ content, children }: LayoutProps) {
                   {linkedin && (
                     <Link
                       href={linkedin}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 print:underline"
                     >
                       LinkedIn →
                     </Link>
@@ -70,13 +70,17 @@ export default function CVLayout({ content, children }: LayoutProps) {
                       <Link
                         key={index}
                         href={link.url}
-                        className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                        className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 print:underline"
                       >
                         {link.text} →
                       </Link>
                     ))}
                 </div>
               )}
+              <div className="mt-3 hidden text-sm text-gray-500 italic print:block">
+                <span className="text-primary-500 underline">분홍색 밑줄</span>을 클릭하면 세부
+                내용을 확인하실 수 있습니다.
+              </div>
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
