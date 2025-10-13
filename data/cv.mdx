@@ -24,10 +24,9 @@ links:
   <div className="flex items-center gap-2">
     <span className="min-w-[80px] font-semibold">보조 기술</span>
     <div className="flex flex-wrap gap-1">
-      <Tag text="PostgreSQL" /> <Tag text="MongoDB" /> <Tag text="Flask" />
+      <Tag text="PostgreSQL" /> <Tag text="MongoDB" />
       <Tag text="pandas" />
       <Tag text="AWS" />
-      <Tag text="Redis" />
     </div>
   </div>
 </div>
@@ -49,7 +48,7 @@ AI로 생성한 3D 가구를 함께 배치하며 방을 꾸밀 수 있는 인테
 - **팀 리더**로서 기획, 개발, 배포 전 과정 총괄
 - Draco 압축 + WebP 텍스처 변환으로 **3D 모델 용량 92% 감소**(1.3MB → 0.1MB) 및 **초기 로딩 속도 58% 개선**(6s → 2.5s)
 - Socket.io + Redis 기반 락 시스템으로 **다중 사용자 동시 수정 충돌 방지**
-- **벽 자석 기능**: OBB 좌표 변환으로 가구-벽 근접 시 위치 보정 및 성능 병목 개선 (O(N^2) -> O(N))
+- **벽 자석 기능**: OBB 좌표 변환으로 가구-벽 근접 시 위치 보정 및 성능 병목 개선 (O(N²) -> O(N))
 - **도면 자동 인식**: OpenCV.js의 Hough Transformation 활용 및 평행선 병합 로직 구현
 
 </section>
