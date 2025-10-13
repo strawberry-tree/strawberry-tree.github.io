@@ -28,9 +28,15 @@ export default function Projects() {
           <h1 className="print: mb-2 hidden text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100 print:block">
             송상록
           </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400 print:hidden">
             지금까지 진행했던 프로젝트를 모아둔 포트폴리오입니다.
           </p>
+          <a
+            href="mailto:drinkingstraw33@gmail.com"
+            className="text-primary-600 dark:text-primary-400 hidden underline print:block"
+          >
+            drinkingstraw33@gmail.com
+          </a>
           <p className="hidden text-lg leading-7 font-bold text-gray-500 dark:text-gray-400 print:block">
             PDF보단{' '}
             <a
