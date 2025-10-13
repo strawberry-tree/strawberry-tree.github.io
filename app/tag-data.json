@@ -14,6 +14,7 @@
   "openai-gpt-4": 1,
   "pydantic": 1,
   "nextjs": 1,
+  "nestjs": 1,
   "react-three-fiber": 1,
   "socketio": 1,
   "opencvjs": 1,
