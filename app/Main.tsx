@@ -34,7 +34,7 @@ const NavigationSection = memo(function NavigationSection() {
       {/* 메인 네비게이션 링크 */}
       <div className="flex flex-col flex-wrap items-center justify-center gap-6 pt-8 md:flex-row">
         <Link
-          href="/cv"
+          href="https://drive.google.com/file/d/1IRW920OLYh4dVG_UhIj7atZKL_Ttn-mR/view?usp=sharing"
           className="group from-primary-500 to-primary-600 relative overflow-hidden rounded-xl bg-gradient-to-r px-10 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
         >
           <span className="relative z-10 flex items-center gap-2 text-lg">
