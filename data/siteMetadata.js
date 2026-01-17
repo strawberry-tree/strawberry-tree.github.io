@@ -17,7 +17,7 @@ const siteMetadata = {
   // twitter: 'https://twitter.com/Twitter',
   // facebook: 'https://facebook.com',
   //youtube: 'https://youtube.com',
-  linkedin: 'www.linkedin.com/in/상록-송-371759274',
+  linkedin: 'https://www.linkedin.com/in/상록-송-371759274',
   // threads: 'https://www.threads.net',
   // instagram: 'https://www.instagram.com',
   // medium: 'https://medium.com',
