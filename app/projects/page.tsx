@@ -52,11 +52,12 @@ export default function Projects() {
           <div className="space-y-8">
             {projects.map((project) => {
               const imgSrc = Array.isArray(project.images) ? project.images[0] : project.images
+              const href = project.externalLink || `/projects/${project.slug}`
               return (
-                <Link href={`/projects/${project.slug}`} key={project.slug} className="block">
+                <Link href={href} key={project.slug} className="block" target={project.externalLink ? '_blank' : undefined} rel={project.externalLink ? 'noopener noreferrer' : undefined}>
                   <article
                     key={project.slug}
-                    className="print:grid-cols-[3fr_6fr]dark:border-gray-700 grid transform grid-cols-1 gap-6 rounded-lg border border-gray-200 p-6 transition-all duration-300 hover:scale-105 hover:border-gray-400 hover:shadow-lg md:grid-cols-[3fr_6fr] dark:hover:border-gray-500 print:grid-cols-[3fr_6fr] print:gap-4"
+                    className={`print:grid-cols-[3fr_6fr]dark:border-gray-700 grid transform gap-6 rounded-lg border border-gray-200 p-6 transition-all duration-300 hover:scale-105 hover:border-gray-400 hover:shadow-lg dark:hover:border-gray-500 print:gap-4 ${imgSrc ? 'grid-cols-1 md:grid-cols-[3fr_6fr] print:grid-cols-[3fr_6fr]' : 'grid-cols-1'}`}
                   >
                     {imgSrc && (
                       <div>

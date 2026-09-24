@@ -170,6 +170,7 @@ export const Project = defineDocumentType(() => ({
     layout: { type: 'string' },
     draft: { type: 'boolean' },
     pages: { type: 'string' },
+    externalLink: { type: 'string' },
   },
   computedFields,
 }))
